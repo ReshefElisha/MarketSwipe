@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title Market Swipe Exchange
+  body
+    h1 Market Swipe Exchange
+    - unless swipes.empty?
+      table
+        - for swipe in swipes do
+          tr
+		    td.hello = "Hello"
+            td.name = swipe.owner.fullName
+            td.time = swipe.time
+    - else
+      p
+        | No items found.  Please add some inventory.
+           Thank you!
