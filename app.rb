@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'slim'
-require 'data-mapper'
+require 'data_mapper'
 
 module MarketSwipe
   class App < Sinatra::Base
