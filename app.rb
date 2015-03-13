@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'slim'
+require 'data-mapper'
 
 module MarketSwipe
   class App < Sinatra::Base
@@ -8,11 +9,15 @@ module MarketSwipe
 	swipes
 	end
 
+	configure do
+	
+	end
+	
 	get '/' do
 	  slim :index
 	end
-
-	class Swipe
+  end
+  class Swipe
 	  def initialize(owner = User.new("rhe8","Reshef Elisha"), time = "000000")
 		@owner = owner
 		@time = time
@@ -30,5 +35,4 @@ module MarketSwipe
 	  attr_reader :pittUname
 	  attr_reader :fullName
 	end
-  end
 end
