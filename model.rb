@@ -6,17 +6,17 @@ DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/developm
 
 class Swipe
   include DataMapper::Resource
-  property :id,		Serial
-  property :owner,		String, :required => true
-  property :time,		DateTime
+  property :id,         Serial
+  property :owner,      String, :required => true
+  property :time,       DateTime
+  property :duration,   Decimal
 end
 
 class User
   include DataMapper::Resource
   include BCrypt
-
-  property :id, Serial, :key => true
-  property :username, String, :length => 3..50
+  property :id,       Serial, :key => true
+  property :pitt_id, String, :length => 3..50
   property :password, BCryptHash
 end
 

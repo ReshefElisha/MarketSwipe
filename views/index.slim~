@@ -1,16 +1,6 @@
 - if !logged_in
   p Please Log In:
-    == slim :login, :layout => false
+  == slim :login
 - else
-  h2 Available swipes:
-  - unless @swipes.empty?
-    table
-      tr
-	      td.title = "Swiper's Name"
-	      td.title = "Swipe time"
-      - for swipe in @swipes do
-	      tr
-	        td.name = swipe.owner
-  - else
-    p No swipes available at this moment. If you have too many, feel free to give some away
-    p Thank you!
+  == slim :giveaway
+  == slim :swipeslist
