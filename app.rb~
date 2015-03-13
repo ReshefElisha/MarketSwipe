@@ -26,7 +26,7 @@ module MarketSwipe
       @user = params[:pitt_id]
       @password = params[:password]
       @curUser = User.first(:username => @user)
-      if @curUser and @curUser.password == @password
+      if @curUser and curUser.password == @password
         @@logged_in = true
         puts "logged in!"
         

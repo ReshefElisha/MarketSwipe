@@ -1,6 +1,6 @@
 - if !logged_in
   p Please Log In:
-  == slim :login, :layout => false
+    == slim :login, :layout => false
 - else
   h2 Available swipes:
   - unless @swipes.empty?
