@@ -46,7 +46,6 @@ module MarketSwipe
       user = params[:pitt_id]
       password = params[:password]
       curUser = User.first(:pitt_id => user)
-      puts curUser
       if curUser and curUser.password == password
         session[:pitt_id] = user
       end

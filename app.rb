@@ -18,7 +18,7 @@ module MarketSwipe
     def pruneSwipes
       swipes = Swipe.all
       timeNow = DateTime.strptime(DateTime.now.new_offset(-4.0/24).strftime('%m/%d/%Y %l:%M %p'), '%m/%d/%Y %l:%M %p')
-      if swipes      
+      if swipes
         for swipe in swipes
           if swipe[:timeTo] < timeNow
             Swipe.get(swipe[:id]).destroy
