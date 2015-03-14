@@ -12,7 +12,7 @@
   	      tr
   	        th.name = swipe.owner
             th.email = swipe.email
-            th.from = swipe.timeFrom
+            th.from = swipe.timeFrom.strftime([format='%b %-d, %y : %l:%M:%S %P'])
             th.to = swipe.timeTo
   - else
     p No swipes available at this moment. If you have too many, feel free to give some away

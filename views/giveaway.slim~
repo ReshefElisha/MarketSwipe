@@ -1,13 +1,28 @@
 h2 Give some swipes:
-.col-md-5
-  h3 What time are you available to swipe someone in?
-  #datetimepicker
+.col-md-12
+  form.form-horizontal(action=url('/giveaway') method='post')
+    h3 What time are you available to swipe someone in?
+    h4 From:  
+    input.form-control#datetimepickerFrom(name = 'timeFrom' required = true)Press to pick date
+    h4 To:
+    input.form-control#datetimepickerTo(name = 'timeTo' required = true)Press to pick date
+    h4.
+    button.btn.btn-primary(type='submit') Add Swipe
 javascript:
   $(function () {
-            $('#datetimepicker').datetimepicker({
+            $('#datetimepickerFrom').datetimepicker({
+                sideBySide: true,
+                stepping: 5
+            });
+            $('#datetimepickerTo').datetimepicker({
                 inline: true,
                 sideBySide: true,
-                minDate: moment("01/01/2015"),
                 stepping: 5
+            });
+            $("#datetimepickerFrom").on("dp.change",function (e) {
+              $('#datetimepickerTo').data("DateTimePicker").minDate(e.date);
+            });
+            $("#datetimepickerTo").on("dp.change",function (e) {
+              $('#datetimepickerFrom').data("DateTimePicker").maxDate(e.date);
             });
         });

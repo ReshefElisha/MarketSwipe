@@ -5,6 +5,9 @@ form.form-horizontal(action=url('/signup') method='post')
     label.control-label(for='pitt_id') Pitt ID
     input.form-control#pitt_id(name='pitt_id' type='text' placeholder='abc123' required=true)
   .form-group
+    label.control-label(for='name') Full Name
+    input.form-control#name(name='name' type='text' placeholder='John Doe' required=true)
+  .form-group
     label.control-label(for='password') Password:
     input.form-control#password(name='password' type='password' required=true)
   .form-group

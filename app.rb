@@ -41,9 +41,15 @@ module MarketSwipe
       rpassword = params[:rpassword]
       if !User.first(:pitt_id => user) and password == rpassword
         puts "New User!"
-        puts user
-        User.create(:pitt_id => user, :password => password)
+        puts session[:pitt_id]
+        User.create(:pitt_id => user, :name => params[:name], :password => password)
       end
+      redirect to('/')
+    end
+    
+    post '/giveaway' do
+      puts params[:datetimepickerFrom]
+      Swipe.create(:owner => User.first(:pitt_id => session[:pitt_id]).name, :email => session[:pitt_id]+'@pitt.edu', :timeFrom => params[:timeFrom], :timeTo => params[:timeTo])
       redirect to('/')
     end
   end

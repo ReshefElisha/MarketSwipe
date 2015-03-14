@@ -1,4 +1,6 @@
-col-md-12
-  col-md-3
-    ==slim :signin
-    == slim :signup
+.container
+  .row
+    .col-md-4
+      == slim :signin
+    .col-md-4  
+      == slim :signup
