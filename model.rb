@@ -25,4 +25,3 @@ end
 
 DataMapper.finalize
 DataMapper.auto_upgrade!
-User.auto_migrate!
