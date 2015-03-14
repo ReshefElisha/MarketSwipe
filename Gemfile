@@ -3,6 +3,7 @@ gem 'sinatra'
 gem 'slim'
 gem 'data_mapper'
 gem 'mail'
+gem 'postmark'
 
 group :production do
     gem "pg"

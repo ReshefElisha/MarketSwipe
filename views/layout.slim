@@ -15,6 +15,10 @@ html
   body 
     .jumbotron    
       h1 MarketSwipeMe, The swipe exchange
+    - if alert   
+      .col-md-12      
+        h3
+          .label.label-info =alert
     == yield
 
     

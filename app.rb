@@ -14,6 +14,10 @@ module MarketSwipe
     def logged_in?
       session[:pitt_id]
     end
+
+    def alert
+      session[:alert]
+    end
     
     def pruneSwipes
       swipes = Swipe.all
@@ -42,14 +46,36 @@ module MarketSwipe
       redirect to('/')
     end
 
+    get '/conf/:pittId' do
+      curUser = User.first(:pitt_id => params[:pittId])
+      curUser[:confirmed]=true;
+      redirect to('/')
+      session[:alert] = 'Your account has been confirmed, you may now log in'
+    end
+
     post '/signin' do
       user = params[:pitt_id]
       password = params[:password]
       curUser = User.first(:pitt_id => user)
       if curUser and curUser.password == password
         session[:pitt_id] = user
+        session[:alert] = nil
+      elsif curUser
+        session[:alert] = 'Wrong password, please try again'
       end
       redirect to('/')
+    end
+
+    def sendConfirmEmail(pittId)
+      addr=pittId+'@pitt.edu'
+      client = Postmark::ApiClient.new(ENV['POSTMARK_API_KEY'])
+
+      client.deliver(
+        from: 'noreply@marketswipe.me',
+        to: 'reshef.elisha@gmail.com',
+        subject: 'Please confirm your email for MarketSwipe',
+        html_body: 'Please confirm your email address by clicking on <a href="www.marketswipe.me/conf/'+pittId+'">this link</a>.',
+        track_opens: true)
     end
 
     post '/signup' do
@@ -58,8 +84,10 @@ module MarketSwipe
       rpassword = params[:rpassword]
       if !User.first(:pitt_id => user) and password == rpassword
         puts "New User!"
-        puts session[:pitt_id]
+        puts params[:pitt_id]
         User.create(:pitt_id => user, :name => params[:name], :password => password)
+        sendConfirmEmail(params[:pitt_id])
+        session[:alert] = 'Your account has been created, please check your pitt email for confirmation'
       end
       redirect to('/')
     end

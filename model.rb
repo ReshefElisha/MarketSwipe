@@ -16,11 +16,13 @@ end
 class User
   include DataMapper::Resource
   include BCrypt
-  property :id,       Serial, :key => true
-  property :pitt_id,  String, :length => 3..10
+  property :id,       Serial,   :key => true
+  property :pitt_id,  String,   :length => 3..10
+  property :confirmed, Boolean,  :default => false
   property :name,     String
   property :password, BCryptHash
 end
 
 DataMapper.finalize
 DataMapper.auto_upgrade!
+User.auto_migrate!
