@@ -18,6 +18,7 @@ javascript:
                 stepping: 5
             });
             $('#datetimepickerTo').datetimepicker({
+                inline: true,
                 sideBySide: true,
                 stepping: 5
             });

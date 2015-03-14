@@ -8,4 +8,4 @@
   .col-md-6
     == slim :giveaway
   .col-md-6
-      == slim :swipeslist
+    == slim :swipeslist
