@@ -2,6 +2,7 @@ require 'sinatra'
 require 'slim'
 require 'data_mapper'
 require 'date'
+require 'mail'
 
 require './model'
 
