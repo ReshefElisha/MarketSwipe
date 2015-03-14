@@ -9,6 +9,14 @@ module MarketSwipe
   class App < Sinatra::Base
     configure do
       enable :sessions
+      Mail.defaults do
+        delivery_method :smtp, {
+        :port      => 587,
+        :address   => "smtp.mandrillapp.com",
+        :user_name => ENV["MANDRILL_USERNAME"],
+        :password  => ENV["MANDRILL_PASSWORD"]
+        }
+      end
     end
     
     def logged_in?
@@ -78,14 +86,16 @@ module MarketSwipe
 
     def sendConfirmEmail(rand, pittId)
       addr=pittId+'@pitt.edu'
-      client = Postmark::ApiClient.new(ENV['POSTMARK_API_KEY'])
+      mail = Mail.deliver do
+        to      addr
+        from    'MarketSwipeMe <noreply@marketswipe.me>'
+        subject 'Please confirm your email for MarketSwipe'
 
-      client.deliver(
-        from: 'noreply@marketswipe.me',
-        to: 'reshef.elisha@gmail.com',
-        subject: 'Please confirm your email for MarketSwipe',
-        html_body: 'Please confirm your email address by clicking on <a href="www.marketswipe.me/'+rand+'/'+pittId+'">this link</a>.',
-        track_opens: true)
+        html_part do
+          content_type 'text/html; charset=UTF-8'
+          body 'Please confirm your email address by clicking on <a href="www.marketswipe.me/'+rand+'/'+pittId+'">this link</a>.'
+        end
+       end
     end
 
     post '/signup' do
