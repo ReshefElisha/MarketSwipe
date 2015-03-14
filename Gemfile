@@ -2,6 +2,7 @@ source "https://rubygems.org"
 gem 'sinatra'
 gem 'slim'
 gem 'data_mapper'
+gem 'mail'
 
 group :production do
     gem "pg"

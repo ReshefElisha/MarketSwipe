@@ -2,6 +2,9 @@
   p Please Log In:
   == slim :login
 - else
+  .col-md-12
+    form(action=url('/logout') method='post')
+      button.btn.btn-primary(type='submit') logout  
   .col-md-6
     == slim :giveaway
   .col-md-6

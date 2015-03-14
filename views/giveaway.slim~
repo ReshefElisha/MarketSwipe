@@ -3,19 +3,21 @@ h2 Give some swipes:
   form.form-horizontal(action=url('/giveaway') method='post')
     h3 What time are you available to swipe someone in?
     h4 From:  
-    input.form-control#datetimepickerFrom(name = 'timeFrom' required = true)Press to pick date
+    #datetimepickerFrom
+      input.form-control(name = 'timeFrom' style='display:none' required = true)
     h4 To:
-    input.form-control#datetimepickerTo(name = 'timeTo' required = true)Press to pick date
+    #datetimepickerTo
+      input.form-control(name = 'timeTo' style='display:none' required = true)
     h4.
     button.btn.btn-primary(type='submit') Add Swipe
 javascript:
   $(function () {
             $('#datetimepickerFrom').datetimepicker({
+                inline: true,
                 sideBySide: true,
                 stepping: 5
             });
             $('#datetimepickerTo').datetimepicker({
-                inline: true,
                 sideBySide: true,
                 stepping: 5
             });

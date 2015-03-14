@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'slim'
 require 'data_mapper'
+require 'date'
 
 require './model'
 
@@ -13,14 +14,32 @@ module MarketSwipe
     def logged_in?
       session[:pitt_id]
     end
+    
+    def pruneSwipes
+      swipes = Swipe.all
+      timeNow = DateTime.strptime(DateTime.now.new_offset(-4.0/24).strftime('%m/%d/%Y %l:%M %p'), '%m/%d/%Y %l:%M %p')
+      if swipes      
+        for swipe in swipes
+          if swipe[:timeTo] < timeNow
+            Swipe.get(swipe[:id]).destroy
+          end
+        end
+      end
+    end
 
     get '/' do
-      @swipes = Swipe.all
+      pruneSwipes
+      @swipes = Swipe.all.sort_by {|vn| vn[:timeFrom]}
       slim :index
     end
 
     get '/signup' do
       slim :signup
+    end
+
+    post '/logout' do
+      session[:pitt_id] = nil
+      redirect to('/')
     end
 
     post '/signin' do
@@ -30,7 +49,6 @@ module MarketSwipe
       puts curUser
       if curUser and curUser.password == password
         session[:pitt_id] = user
-        puts "logged in!"
       end
       redirect to('/')
     end
@@ -48,8 +66,8 @@ module MarketSwipe
     end
     
     post '/giveaway' do
-      puts params[:dateTimePickerFrom]
-      Swipe.create(:owner => User.first(:pitt_id => session[:pitt_id]).name, :email => session[:pitt_id]+'@pitt.edu', :timeFrom => params[:timeFrom], :timeTo => params[:timeTo])
+      puts params[:datetimepickerFrom]
+      Swipe.create(:owner => User.first(:pitt_id => session[:pitt_id]).name, :email => session[:pitt_id]+'@pitt.edu', :timeFrom => DateTime.strptime(params[:timeFrom], '%m/%d/%Y %l:%M %p'), :timeTo => DateTime.strptime(params[:timeTo], '%m/%d/%Y %l:%M %p'))
       redirect to('/')
     end
   end

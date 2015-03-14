@@ -9,8 +9,8 @@ class Swipe
   property :id,         Serial
   property :owner,      String
   property :email,      String
-  property :timeFrom,   String
-  property :timeTo,     String
+  property :timeFrom,   DateTime
+  property :timeTo,     DateTime
 end
 
 class User
@@ -23,7 +23,7 @@ class User
 end
 
 DataMapper.finalize
-DataMapper.auto_migrate!
+#DataMapper.auto_migrate!
 DataMapper.auto_upgrade!
-Swipe.auto_migrate!
-User.auto_migrate!
+#Swipe.auto_migrate!
+#User.auto_migrate!
