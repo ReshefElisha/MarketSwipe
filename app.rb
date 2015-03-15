@@ -65,8 +65,15 @@ module MarketSwipe
     end
 
     get '/conf/:pittId' do
-      sendConfirmEmail(params[:pittId])
-      session[:alert] = 'Confirmation email sent. Please check your pitt.edu email for confirmation.'
+      curUser = User.first(:pitt_id => params[:pittId])
+      if curUser and !curUser.confirmed
+        sendConfirmEmail(curUser.rand, params[:pittId])
+        session[:alert] = 'Confirmation email sent. Please check your pitt.edu email for confirmation.'
+      elsif curUser
+        session[:alert] = 'Your account has already been confirmed, please log on'
+      else
+        session[:alert] = nil
+      end
       redirect to('/')
     end
 
@@ -80,7 +87,7 @@ module MarketSwipe
       elsif curUser and curUser[:confirmed]
         session[:alert] = 'Wrong password, please try again'
       elsif curUser
-        session[:alert] = 'Your account isn\'t confirmed. Please check your email or click <a href="www.marketswipe.com/conf/'+user+'">here</a> to resend confirmation email.'
+        session[:alert] = 'Your account isn\'t confirmed. Please check your email or click <a href="www.marketswipe.me/conf/'+user+'">here</a> to resend confirmation email.'
       end
       redirect to('/')
     end
