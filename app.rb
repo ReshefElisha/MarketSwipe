@@ -107,7 +107,7 @@ module MarketSwipe
         puts "New User!"
         puts params[:pitt_id]
         rand = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
-        User.create(:pitt_id => user, :name => params[:name], :rand => rand, :password => password)
+        User.create(:pitt_id => user, :rand => rand, :name => params[:name], :password => password)
         sendConfirmEmail(rand, params[:pitt_id])
         session[:alert] = 'Your account has been created, please check your pitt email for confirmation'
       end
