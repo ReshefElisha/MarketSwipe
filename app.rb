@@ -94,7 +94,7 @@ module MarketSwipe
 
     def sendConfirmEmail(rand, pittId)
       addr=pittId+'@pitt.edu'
-      mail = Mail.deliver do
+      mail = Mail.new do
         to      addr
         from    'MarketSwipeMe <noreply@marketswipe.me>'
         subject 'Please confirm your email for MarketSwipe'
@@ -103,7 +103,8 @@ module MarketSwipe
           content_type 'text/html; charset=UTF-8'
           body 'Please confirm your email address by clicking on <a href="www.marketswipe.me/'+rand+'/'+pittId+'">this link</a>.'
         end
-       end
+      end
+      mail.deliver!
     end
 
     post '/signup' do
