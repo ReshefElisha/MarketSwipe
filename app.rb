@@ -58,7 +58,7 @@ module MarketSwipe
     get '/:confpass/:pittId' do
       curUser = User.first(:pitt_id => params[:pittId])
       if curUser and params[:confpass] == curUser.rand
-        curUser[:confirmed]=true;
+        curUser.update(:confirmed => true)
         session[:alert] = 'Your account has been confirmed, you may now log in'
       end
       redirect to('/')
@@ -73,7 +73,7 @@ module MarketSwipe
         session[:alert] = 'Your account has already been confirmed, please log on'
       else
         session[:alert] = nil
-      end
+      end 
       redirect to('/')
     end
 
@@ -81,10 +81,10 @@ module MarketSwipe
       user = params[:pitt_id]
       password = params[:password]
       curUser = User.first(:pitt_id => user)
-      if curUser and curUser[:confirmed] and curUser.password == password
+      if curUser and curUser.confirmed and curUser.password == password
         session[:pitt_id] = user
         session[:alert] = nil
-      elsif curUser and curUser[:confirmed]
+      elsif curUser and curUser.confirmed
         session[:alert] = 'Wrong password, please try again'
       elsif curUser
         session[:alert] = 'Your account isn\'t confirmed. Please check your email or click <a href="www.marketswipe.me/conf/'+user+'">here</a> to resend confirmation email.'
@@ -113,7 +113,7 @@ module MarketSwipe
       if !User.first(:pitt_id => user) and password == rpassword
         puts "New User!"
         puts params[:pitt_id]
-        rand = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
+        rand = (0...20).map { ('a'..'z').to_a[rand(26)] }.join
         User.create(:pitt_id => user, :rand => rand, :name => params[:name], :password => password)
         sendConfirmEmail(rand, params[:pitt_id])
         session[:alert] = 'Your account has been created, please check your pitt email for confirmation'
